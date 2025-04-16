@@ -1,5 +1,7 @@
+"use client";
+
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const Header = () => {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -56,7 +58,7 @@ const Header = () => {
             {headerElements.map((item) => (
               <li key={item.name} className="">
                 <Link
-                  to={item.path}
+                  href={item.path}
                   className="hover:font-extrabold transition-all duration-150"
                 >
                   {item.name}

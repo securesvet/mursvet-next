@@ -1,8 +1,17 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  background-color: #242424;
+  --header-height: 5rem;
+  --footer-height: 5rem;
+  --screen-no-header: calc(100vh - var(--header-height));
+  --screen-no-header-no-footer: calc(
+    100vh - var(--header-height) - var(--footer-height)
+  );
+  --main-content-padding: 2rem;
 }
 
 @theme inline {

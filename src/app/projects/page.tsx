@@ -1,49 +1,59 @@
-import mursvet from "/images/mursvet.webp";
-import heroed from "/images/heroed.webp";
-import tbank from "/images/tbank.webp";
+import mursvet from "../../../public/images/mursvet.webp";
+import heroed from "../../../public/images/heroed.webp";
+import tbank from "../../../public/images/tbank.webp";
 import { LayoutHeader } from "@/components/Header/";
 import Card, { CardProps } from "@/components/ui/Card";
 import { FaGithub, FaNodeJs, FaReact } from "react-icons/fa";
-import ViteSvg from "/images/vite.svg";
-import ReduxSvg from "/images/redux.svg";
-import BabelSvg from "/images/babel.svg";
+import ViteSvg from "../../../public/images/vite.svg";
+import ReduxSvg from "../../../public/images/redux.svg";
+import BabelSvg from "../../../public/images/babel.svg";
 import { SiDeno } from "react-icons/si";
 import { ReactNode } from "react";
+import Image from "next/image";
 import { IconContext } from "react-icons";
 
 const ReactColorIcon = () => {
-  return (
-    <IconContext.Provider value={{ color: "#61DAFB" }}>
-      <FaReact />
-    </IconContext.Provider>
-  );
+  return <FaReact color="#61DAFB" />;
 };
 const NodeJsColorIcon = () => {
-  return (
-    <IconContext.Provider value={{ color: "#68a063" }}>
-      <FaNodeJs />
-    </IconContext.Provider>
-  );
+  return <FaNodeJs color="#68a063" />;
 };
 
 const DenoColorIcon = () => {
-  return (
-    <IconContext.Provider value={{ color: "#000000" }}>
-      <SiDeno />
-    </IconContext.Provider>
-  );
+  return <SiDeno color="#000" />;
 };
 
 const ViteSvgColorIcon = () => {
-  return <ViteSvg width={20} height={20} />;
+  return (
+    <Image
+      alt="vite"
+      width={20}
+      height={20}
+      src={ViteSvg}
+    />
+  );
 };
 
 const ReduxSvgColorIcon = () => {
-  return <ReduxSvg width={20} height={20} />;
+return (
+  <Image
+    alt="redux"
+    width={20}
+    height={20}
+    src={ReduxSvg}
+  />
+)
 };
 
 const BableSvgColorIcon = () => {
-  return <BabelSvg width={20} height={20} />;
+return (
+  <Image
+    alt="babel"
+    width={20}
+    height={20}
+    src={BabelSvg}
+  />
+)
 };
 
 const Projects = () => {
@@ -86,7 +96,7 @@ const Projects = () => {
   return (
     <LayoutHeader>
       <div className="text-center mb-12">
-        <h2 className="text-white drop-shadow-lg">
+        <h2 className="text-white drop-shadow-lg text-2xl mb-2">
           Projects
         </h2>
         <p className="text-gray-300 mt-2 text-lg">

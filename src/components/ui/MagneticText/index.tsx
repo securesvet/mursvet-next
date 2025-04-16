@@ -1,4 +1,13 @@
+"use client";
+
+import { Inter } from "next/font/google";
+
 import { type MouseEvent, type TouchEvent, useRef, useState } from "react";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 type MagneticTextType = {
   text: string;
@@ -57,29 +66,26 @@ const MagneticText = ({
   return (
     <div
       ref={containerRef}
-      className="flex gap-[0.05em] cursor-pointer"
-      style={{
-        fontFamily: '"InterVariable", sans-serif',
-        userSelect: "text",
-        WebkitTapHighlightColor: "transparent",
-      }}
+      className={`flex gap-[0.05em] ${inter.className}`}
       onMouseMove={handleMouseMove}
       onTouchMove={handleTouchMove}
       onMouseLeave={resetWeights}
       onTouchEnd={resetWeights}
       onTouchCancel={resetWeights}
     >
-      {text.split("").map((char, i) => (
-        <span
-          key={i}
-          style={{
-            fontVariationSettings: `"wght" ${weights[i] || 400}`,
-            transition: "font-variation-settings 0.3s ease",
-          }}
-        >
-          {char}
-        </span>
-      ))}
+      <p className="hover:cursor-pointer">
+        {text.split("").map((char, i) => (
+          <span
+            key={i}
+            style={{
+              fontVariationSettings: `"wght" ${weights[i] || 400}`,
+              transition: "font-variation-settings 0.3s ease",
+            }}
+          >
+            {char}
+          </span>
+        ))}
+      </p>
     </div>
   );
 };

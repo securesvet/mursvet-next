@@ -1,7 +1,6 @@
 import MagneticText from "@/components/ui/MagneticText";
 import Blob from "@/components/ui/Blob";
 import MountTransition from "@/components/transitions";
-import me from '/me.webp'
 
 const Home = () => {
   return (
@@ -24,7 +23,7 @@ const Avatar = () => {
   const githubUrl = "https://github.com/securesvet";
   return (
     <a href={githubUrl} target="_blank">
-      <Blob imageUrl={me.src} />
+      <Blob imageUrl={'/me.webp'} />
     </a>
   );
 };
@@ -33,10 +32,10 @@ const Greeting = () => {
   return (
     <>
       <p className="text-3xl">Hi, my name is</p>
-      <h2>
+      <h2 className="text-3xl">
         <MagneticText text="Sviatoslav" />
       </h2>
-      <h2>
+      <h2 className="text-3xl">
         <MagneticText text="Murzin" startBold />
       </h2>
     </>
