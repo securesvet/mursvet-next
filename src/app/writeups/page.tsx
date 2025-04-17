@@ -4,6 +4,7 @@ import { getGithubMarkdownFoldersWithFiles, type FolderWithMarkdown } from "@/ap
 
 async function Writeups() {
     const data = await getGithubMarkdownFoldersWithFiles("securesvet", "mursvet-next")
+    console.log(data);
 
     return (
         <LayoutHeader>

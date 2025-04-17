@@ -1,4 +1,4 @@
-const MARKDOWN_PATH = "docs/";
+const MARKDOWN_PATH = "docs";
 const TOKEN = process.env.GIT_TOKEN;
 const HEADERS = {
     Accept: "application/vnd.github+json",
@@ -33,6 +33,8 @@ export async function getGithubMarkdownFoldersWithFiles(
     }
 
     const data = await res.json();
+    
+    console.log(data);
 
     const filename = "index";
 
@@ -46,6 +48,7 @@ export async function getGithubMarkdownFoldersWithFiles(
     const folders: FolderWithMarkdown[] = [];
 
     for (const file of markdownFiles) {
+        console.log('file:', file);
         const metaInfo = await getGithubFileMetaInfo(owner, repo, file.path);
         const directoryAndIndexPath = file.path.replace(
             `${MARKDOWN_PATH}/`,

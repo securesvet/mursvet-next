@@ -3,7 +3,6 @@ import {
     getGithubMarkdownFoldersWithFiles,
 } from "@/app/api/lib";
 
-const MARKDOWN_PATH = "src/markdown";
 const GIT_USERNAME = process.env.GIT_USERNAME!;
 const GIT_REPO = process.env.GIT_REPO!;
 
