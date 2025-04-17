@@ -3,14 +3,14 @@ import Link from "next/link";
 import { type FolderWithMarkdown } from "../api/lib";
 
 async function Writeups() {
-    const res = await fetch("http://localhost:3000/api/writeups/", {
+    const data = await fetch("https://mursvet.ru/api/writeups/", {
         method: "GET",
     });
-    if (!res.ok) {
+    if (!data.ok) {
         return <h1>Something went wrong, try refreshing page</h1>;
     }
 
-    const content: FolderWithMarkdown[] = await res.json();
+    const content: FolderWithMarkdown[] = await data.json();
 
     return (
         <LayoutHeader>
