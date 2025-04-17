@@ -1,4 +1,4 @@
-const MARKDOWN_PATH = "src/markdown";
+const MARKDOWN_PATH = "docs/";
 const TOKEN = process.env.GIT_TOKEN;
 const HEADERS = {
     Accept: "application/vnd.github+json",

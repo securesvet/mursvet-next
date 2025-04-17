@@ -11,12 +11,12 @@ export default async function Page({
     const { slug } = await params;
 
     const markdownUrl =
-        `https://github.com/securesvet/mursvet-next/edit/main/src/markdown/${slug}/index.mdx`;
+        `https://github.com/securesvet/mursvet-next/edit/main/docs/${slug}/index.mdx`;
 
     const { updated, author, created, contents } = await getGithubFileContents(
         "securesvet",
         "mursvet-next",
-        `src/markdown/${slug}/index.mdx`,
+        `docs/${slug}/index.mdx`,
     );
 
     return (
@@ -27,8 +27,8 @@ export default async function Page({
                     source={contents}
                 />
             </article>
-            <div className="text-primary">
-                <div className="flex justify-end text-secondary">
+            <div className="text-primary mt-5">
+                <div className="flex justify-end text-secondary flex-wrap">
                     {updated && author &&
                         (
                             <p className="text-sm">

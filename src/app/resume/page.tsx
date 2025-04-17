@@ -1,5 +1,5 @@
 import { LayoutHeader } from "@/components/Header";
-import ResumeMarkdown from "@/markdown/resume.mdx";
+import ResumeMarkdown from "@/../docs/resume.mdx";
 // import resumePDFurl from "/resume.pdf";
 
 const Resume = () => {
