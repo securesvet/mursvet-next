@@ -1,3 +1,4 @@
+import { getGithubFileMetaInfo } from "@/app/api/lib";
 import { LayoutHeader } from "@/components/Header";
 import { FaEdit } from "react-icons/fa";
 
@@ -10,47 +11,37 @@ export default async function Page({
 
     const { default: Markdown } = await import(`@/markdown/${slug}/index.mdx`);
 
+    const markdownUrl =
+        `https://github.com/securesvet/mursvet-next/edit/main/src/markdown/${slug}/index.mdx`;
+
+    const { created, updated, author } = await getGithubFileMetaInfo(
+        "securesvet",
+        "mursvet-next",
+        `src/markdown/${slug}/index.mdx`,
+    );
+
     return (
         <LayoutHeader>
-            <Markdown />
+            <article className="prose prose-invert">
+                <Markdown />
+            </article>
+            <div className="text-primary">
+                <div className="flex justify-end text-secondary">
+                    {updated && author &&
+                        (
+                            <p className="text-sm">
+                                Last edited on {updated} by <b>{author}</b>
+                            </p>
+                        )}
+                </div>
+                <a
+                    className="hover:underline text-sm flex justify-end items-center gap-1"
+                    href={markdownUrl}
+                >
+                    <FaEdit />
+                    Edit
+                </a>
+            </div>
         </LayoutHeader>
     );
 }
-
-// const Post = (
-//     { name, title, content, birthtime, lastEdited, author }: {
-//         name: string;
-//         title: string;
-//         content: string;
-//         birthtime: string;
-//         lastEdited: string;
-//         author: string;
-//     },
-// ) => {
-//     <LayoutHeader>
-//         <div className="p-6 max-w-4xl mx-auto">
-//             <h1>{title}</h1>
-//             <p className="text-sm text-gray-400">{birthtime}</p>
-//             <div className="prose dark:prose-invert">
-//                 {content}
-//             </div>
-//             <div className="flex w-full justify-end">
-//                 <div className="flex flex-col gap-2">
-//                     {lastEdited && author &&
-//                         (
-//                             <p className="text-sm text-gray-400">
-//                                 Last edited on {lastEdited} by {author}
-//                             </p>
-//                         )}
-//                     <a
-//                         className="hover:underline text-sm text-gray-400 flex justify-end items-center gap-1"
-//                         href={`https://github.com/securesvet/writeups/edit/main/docs/${name}/index.md`}
-//                     >
-//                         <FaEdit className="text-gray-400" />
-//                         Edit
-//                     </a>
-//                 </div>
-//             </div>
-//         </div>
-//     </LayoutHeader>;
-// };
