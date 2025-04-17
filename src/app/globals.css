@@ -2,8 +2,9 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
+  --background: #FFF;
   --foreground: #171717;
+  color-scheme: dark;
   background-color: #242424;
   --header-height: 5rem;
   --footer-height: 5rem;

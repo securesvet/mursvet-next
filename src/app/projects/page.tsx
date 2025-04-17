@@ -10,7 +10,6 @@ import BabelSvg from "../../../public/images/babel.svg";
 import { SiDeno } from "react-icons/si";
 import { ReactNode } from "react";
 import Image from "next/image";
-import { IconContext } from "react-icons";
 
 const ReactColorIcon = () => {
   return <FaReact color="#61DAFB" />;

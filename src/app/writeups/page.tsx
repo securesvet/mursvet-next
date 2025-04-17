@@ -1,13 +1,17 @@
 import { LayoutHeader } from "@/components/Header";
 import Link from "next/link";
 
-function Writeups() {
+async function Writeups() {
+    const res = await fetch("/api/writeups/Writeup");
+    const content = await res.json();
+
     return (
         <LayoutHeader>
             <div className="max-w-3xl mx-auto">
                 <h2 className="mb-6 text-center text-2xl">Writeups</h2>
                 <nav className="flex flex-col gap-4">
                     <h1>No writeups here yet</h1>
+                    {content}
                     {
                         /* {sortedWriteups.map((writeup) => (
               <Link

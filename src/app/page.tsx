@@ -1,21 +1,24 @@
 import MagneticText from "@/components/ui/MagneticText";
 import Blob from "@/components/ui/Blob";
 import MountTransition from "@/components/transitions";
+import { LayoutHeader } from "@/components/Header";
 
 const Home = () => {
   return (
-    <section id="greet">
-      <div className="flex justify-center items-center h-[var(--screen-no-header-no-footer)]">
-        <MountTransition>
-          <Greeting />
-        </MountTransition>
-        <div
-          className={`w-xs aspect-square hover:opacity-80 transition-opacity duration-300`}
-        >
-          <Avatar />
+    <LayoutHeader>
+      <section id="greet">
+        <div className="flex justify-center items-center">
+          <MountTransition>
+            <Greeting />
+          </MountTransition>
+          <div
+            className={`w-xs aspect-square hover:opacity-80 transition-opacity duration-300`}
+          >
+            <Avatar />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </LayoutHeader>
   );
 };
 
@@ -23,7 +26,7 @@ const Avatar = () => {
   const githubUrl = "https://github.com/securesvet";
   return (
     <a href={githubUrl} target="_blank">
-      <Blob imageUrl={'/me.webp'} />
+      <Blob imageUrl={"/me.webp"} />
     </a>
   );
 };
