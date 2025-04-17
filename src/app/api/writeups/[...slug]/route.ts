@@ -1,9 +1,5 @@
 import { NextRequest } from "next/server";
-import {
-  getGithubFileContents,
-  getGithubFileMetaInfo,
-  getGithubMarkdownFoldersWithFiles,
-} from "@/app/api/lib";
+import { getGithubFileContents } from "@/app/api/lib";
 
 const MARKDOWN_PATH = "src/markdown";
 const GIT_USERNAME = process.env.GIT_USERNAME!;
@@ -11,11 +7,11 @@ const GIT_REPO = process.env.GIT_REPO!;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string[] } },
+  { params }: { params: Promise<{ slug: string[] }> },
 ) {
   const param = await params;
   const [directoryName, fileName] = param.slug;
-  let res: { contents: string };
+  let res;
 
   try {
     res = await getGithubFileContents(

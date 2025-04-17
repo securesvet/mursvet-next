@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import {
-    getGithubFileMetaInfo,
     getGithubMarkdownFoldersWithFiles,
 } from "@/app/api/lib";
 

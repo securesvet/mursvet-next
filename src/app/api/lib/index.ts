@@ -6,7 +6,7 @@ const HEADERS = {
     "X-GitHub-Api-Version": "2022-11-28",
 };
 
-type FolderWithMarkdown = {
+export type FolderWithMarkdown = {
     folder: string;
     isMDX: boolean;
 } & MetaInfo;
@@ -69,7 +69,7 @@ export async function getGithubFileContents(
     owner: string,
     repo: string,
     path: string,
-): Promise<{ contents: string }> {
+): Promise<{ contents: string } & MetaInfo> {
     const url =
         `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
     const res = await fetch(url, { headers: HEADERS });
@@ -77,8 +77,10 @@ export async function getGithubFileContents(
         throw new Error(`GitHub API error for ${path}: ${res.statusText}`);
     }
     const data = await res.json();
+    const metaInfo = await getGithubFileMetaInfo(owner, repo, path);
     return {
         contents: Buffer.from(data.content, "base64").toString(),
+        ...metaInfo,
     };
 }
 
