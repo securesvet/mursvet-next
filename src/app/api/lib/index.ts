@@ -36,7 +36,6 @@ export async function getGithubMarkdownFoldersWithFiles(
 
     const filename = "index";
 
-    // Only markdown/mdx files inside src/markdown
     const markdownFiles = data.tree.filter((item: any) =>
         item.path.startsWith(`${MARKDOWN_PATH}/`) &&
         item.type === "blob" &&
