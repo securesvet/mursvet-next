@@ -1,6 +1,7 @@
-import { getGithubFileMetaInfo } from "@/app/api/lib";
+import { getGithubFileContents, getGithubFileMetaInfo } from "@/app/api/lib";
 import { LayoutHeader } from "@/components/Header";
 import { FaEdit } from "react-icons/fa";
+import MarkdownComponents from "@/components/Markdown";
 
 export default async function Page({
     params,
@@ -9,12 +10,10 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    const { default: Markdown } = await import(`@/markdown/${slug}/index.mdx`);
-
     const markdownUrl =
         `https://github.com/securesvet/mursvet-next/edit/main/src/markdown/${slug}/index.mdx`;
 
-    const { created, updated, author } = await getGithubFileMetaInfo(
+    const { updated, author, created, contents } = await getGithubFileContents(
         "securesvet",
         "mursvet-next",
         `src/markdown/${slug}/index.mdx`,
@@ -22,8 +21,11 @@ export default async function Page({
 
     return (
         <LayoutHeader>
-            <article className="prose prose-invert">
-                <Markdown />
+            <article className="prose prose-invert px-10">
+                <p className="text-sm">{created}</p>
+                <MarkdownComponents
+                    source={contents}
+                />
             </article>
             <div className="text-primary">
                 <div className="flex justify-end text-secondary">
