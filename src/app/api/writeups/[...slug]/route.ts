@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { getGithubFileContents } from "@/app/api/lib";
 
-const MARKDOWN_PATH = "docs";
+const MARKDOWN_PATH = "src/docs";
 const GIT_USERNAME = process.env.GIT_USERNAME!;
 const GIT_REPO = process.env.GIT_REPO!;
 

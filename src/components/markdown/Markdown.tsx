@@ -1,9 +1,9 @@
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import React from "react";
-import MagneticText from "./ui/MagneticText";
+import MagneticText from "@/components/ui/MagneticText";
 import Image, { ImageProps } from "next/image";
 
-const Markdown = ({ ...props }: MDXRemoteProps) => {
+const MarkdownComponents = ({ ...props }: MDXRemoteProps) => {
     return (
         <MDXRemote
             components={{
@@ -15,4 +15,4 @@ const Markdown = ({ ...props }: MDXRemoteProps) => {
     );
 };
 
-export default Markdown;
+export default MarkdownComponents;

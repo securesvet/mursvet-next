@@ -1,7 +1,6 @@
-import { getGithubFileContents, getGithubFileMetaInfo } from "@/app/api/lib";
 import { LayoutHeader } from "@/components/Header";
 import { FaEdit } from "react-icons/fa";
-import MarkdownComponents from "@/components/Markdown";
+import { MDXLayout } from "@/components/markdown";
 
 export default async function Page({
     params,
@@ -10,39 +9,46 @@ export default async function Page({
 }) {
     const { slug } = await params;
 
-    const markdownUrl =
-        `https://github.com/securesvet/mursvet-next/edit/main/docs/${slug}/index.mdx`;
-
-    const { updated, author, created, contents } = await getGithubFileContents(
-        "securesvet",
-        "mursvet-next",
-        `docs/${slug}/index.mdx`,
+    const { default: Markdown } = await import(
+        `@/docs/${slug}/index.mdx`
     );
+
+    const markdownUrl =
+        `https://github.com/securesvet/mursvet-next/edit/main/src/docs/${slug}/index.mdx`;
+
+    // const { updated, author, created, contents } = await getGithubFileContents(
+    //     "securesvet",
+    //     `docs/${slug}/index.mdx`,
+    // );
 
     return (
         <LayoutHeader>
-            <article className="prose prose-invert px-10">
-                <p className="text-sm">{created}</p>
-                <MarkdownComponents
-                    source={contents}
-                />
-            </article>
-            <div className="text-primary mt-5">
-                <div className="flex justify-end text-secondary flex-wrap">
-                    {updated && author &&
+            <div className="max-w-screen ">
+                <div className="flex justify-center">
+                    <MDXLayout>
+                        {/* <p className="text-sm">{created}</p> */}
+                        <Markdown />
+                    </MDXLayout>
+                </div>
+                <div className="text-primary mt-5">
+                    <div className="flex justify-end text-secondary flex-wrap">
+                        {
+                            /* {updated && author &&
                         (
                             <p className="text-sm">
                                 Last edited on {updated} by <b>{author}</b>
                             </p>
-                        )}
+                        )} */
+                        }
+                    </div>
+                    <a
+                        className="hover:underline text-sm flex justify-end items-center gap-1"
+                        href={markdownUrl}
+                    >
+                        <FaEdit />
+                        Edit
+                    </a>
                 </div>
-                <a
-                    className="hover:underline text-sm flex justify-end items-center gap-1"
-                    href={markdownUrl}
-                >
-                    <FaEdit />
-                    Edit
-                </a>
             </div>
         </LayoutHeader>
     );

@@ -12,7 +12,7 @@ const Header = () => {
     const handleScroll = () => {
       const currentScrollY = globalThis.scrollY;
 
-      if (currentScrollY > prevScrollY && currentScrollY > 100) {
+      if (currentScrollY > prevScrollY && currentScrollY > 50) {
         setIsHeaderVisible(false);
       } else {
         setIsHeaderVisible(true);
