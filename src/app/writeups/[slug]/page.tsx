@@ -2,6 +2,7 @@ import { LayoutHeader } from "@/components/Header";
 import { FaEdit } from "react-icons/fa";
 import { MDXLayout } from "@/components/markdown";
 import fs from "fs";
+import path from "path";
 
 export default async function Page({
     params,
@@ -12,11 +13,10 @@ export default async function Page({
 
     let mdFile;
     try {
-
-    const files = fs.readdirSync('src/docs/' + slug);
-    mdFile = files.find((f) => ["index.mdx", "index.md"].includes(f));
-    }
-    catch (e) {
+        const files = fs.readdirSync(path.join( process.cwd() + "/src/docs/" + slug));
+        console.log(files)
+        mdFile = files.find((f) => ["index.mdx", "index.md"].includes(f));
+    } catch (e) {
         return (
             <LayoutHeader>
                 <div className="max-w-screen md:px-40 lg:px-70">
@@ -25,7 +25,6 @@ export default async function Page({
             </LayoutHeader>
         );
     }
-
 
     const { default: Markdown, frontmatter } = await import(
         `@/docs/${slug}/${mdFile}`
