@@ -14,11 +14,13 @@ type MagneticTextType = {
   maxWeight?: number;
   minWeight?: number;
   startBold?: boolean;
+  className?: string;
 };
 
 const MagneticText = ({
   text,
   startBold = false,
+  className = "",
 }: MagneticTextType) => {
   const maxWeight = 900;
   const minWeight = 100;
@@ -73,7 +75,7 @@ const MagneticText = ({
       onTouchEnd={resetWeights}
       onTouchCancel={resetWeights}
     >
-      <p className="hover:cursor-pointer">
+      <p className={`hover:cursor-pointer ${className}`}>
         {text.split("").map((char, i) => (
           <span
             key={i}
