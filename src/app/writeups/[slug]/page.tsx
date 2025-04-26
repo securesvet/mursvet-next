@@ -13,8 +13,10 @@ export default async function Page({
 
     let mdFile;
     try {
-        const files = fs.readdirSync(path.join( process.cwd() + "/src/docs/" + slug));
-        console.log(files)
+        const files = fs.readdirSync(
+            path.join(process.cwd() + "/src/docs/" + slug),
+        );
+        console.log(files);
         mdFile = files.find((f) => ["index.mdx", "index.md"].includes(f));
     } catch (e) {
         return (
@@ -30,37 +32,29 @@ export default async function Page({
         `@/docs/${slug}/${mdFile}`
     );
 
-    // If there is no such fields, then updated and author are undefined
-    const { created, updated, author } = frontmatter || {};
-
     const markdownUrl =
         `https://github.com/securesvet/mursvet-next/edit/main/src/docs/${slug}/index.mdx`;
-
+    
     return (
         <LayoutHeader>
             <div className="max-w-screen md:px-40 lg:px-70">
                 <p className="text-sm text-gray-400">
-                    {created}
+                    {frontmatter.created}
                 </p>
                 <MDXLayout>
                     <Markdown />
                 </MDXLayout>
                 <div className="text-primary mt-5">
                     <div className="flex justify-end text-secondary flex-wrap">
-                        {updated &&
-                            (
-                                <p className="text-sm">
-                                    Last edited on {updated}
-                                </p>
-                            )}
+                        <p className="text-sm">
+                            Last edited on {frontmatter.updated}
+                        </p>
                     </div>
                     <Edit markdownUrl={markdownUrl} />
                 </div>
-                {author && (
                     <div className="text-secondary text-sm flex justify-end">
-                        by {author}
+                        by {frontmatter.author}
                     </div>
-                )}
             </div>
         </LayoutHeader>
     );
