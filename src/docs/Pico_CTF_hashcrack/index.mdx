@@ -43,7 +43,7 @@ SHA-256 | 64 chars | cd0894152aa5eec36ec79eb2bcb90ca40f056804530f40732b4957a496b
 
 Глядя на наш хэш: 482c811da5d5b4bc6d497ffa98491e38, если посчитать с помощью Питона
 
-```python3
+```python
 >>> len("482c811da5d5b4bc6d497ffa98491e38")
 32
 ```
@@ -65,7 +65,7 @@ SHA-256 | 64 chars | cd0894152aa5eec36ec79eb2bcb90ca40f056804530f40732b4957a496b
 
 Из всего выше сказанного делаем скрипт
 
-```python3
+```python
 import hashlib
 
 text = "482c811da5d5b4bc6d497ffa98491e38"
@@ -96,7 +96,7 @@ password123
 Ну ладно, смотрим внимательно на хэш и понимаем, что в нём 40 символов, а это значит... Это значит, что можно его поломать таким же образом, только заменить md5 на sha1
 
 
-```python3
+```python
 import hashlib
 
 text = "b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3"
@@ -129,7 +129,7 @@ letmein
 Ладно, вроде похоже на SHA256, попробуем все то же самое
 
 
-```python3
+```python
 import hashlib
 
 text = "916e8c4f79b25028c9e467f1eb8eee6d6bbdff965f9928310ad30a8d88697745"

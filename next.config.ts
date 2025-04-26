@@ -19,7 +19,8 @@ const nextConfig: NextConfig = {
 const withMDX = nextMDX({
   extension: /\.(md|mdx)$/,
   options: {
-    remarkPlugins: [ remarkGfm,
+    remarkPlugins: [
+      remarkGfm,
       remarkFrontmatter,
       remarkMdxFrontmatter,
     ],

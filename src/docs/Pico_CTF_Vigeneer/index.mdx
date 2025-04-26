@@ -5,8 +5,78 @@ author: Sviatoslav Murzin
 tags: ['medium']
 ---
 
-Hello
+# Pico CTF: Vigeneer
 
-```js
-const fs = import('fs');
+Шифр Виженера очень похож на шифр Цезаря, еще известном как ROT-13, ROT-14, etc. 
+
+Смысл у этого шифра похожий, но в отличие от шифра Цезаря, у него есть ключ. Например у нас есть слово "СЛОН", и мы хотим его зашифровать с помощью ключа "КЛЮЧ"
+
+Таким образом, наши смещения будут чередоваться:
+
+- Смещаем букву "С" на позицию буквы "К" в алфавите (11, так как считаем букву "А" за 0), получаем позицию буквы С + позиция буквы К = 19 + 11 = 38 и берем по модулю длины алфавита, получается 5, а это буква Д
+
+- Далее по такой же схеме итерируем слово и ключ, в итоге получаем:
+
+
+
+По заданию получаем `cipher.txt` и ключ `CYLAB`, по которому был зашифрован этот текст:
+
+```txt
+rgnoDVD{O0NU_WQ3_G1G3O3T3_A1AH3S_2951c89f}
 ```
+
+Чтобы решить это задание, достаточно легкого скрипта на питоне, который будет по значению в таблице ASCII делать смещение согласно ключу.
+
+Скучно.
+
+Для разнообразия напишем такую программу на Rust:
+
+```rs
+use std::fs;
+
+const ALPHABET_LENGTH: u8 = 26;
+
+fn main() {
+    let file_path = "/home/svetsec/ctf/pico/vigenere/cipher.txt";
+    println!("In file {file_path}");
+
+    let contents = fs::read_to_string(file_path).expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+
+    let key = "CYLAB";
+
+    let mut result: String = "".to_owned();
+
+    let mut added_non_alphebetical = 0;
+
+    for (i, char) in contents.chars().enumerate() {
+        if !char.is_alphabetic() {
+            added_non_alphebetical += 1;
+            result.push(char);
+            continue;
+        }
+
+        let is_uppercase = char.is_uppercase();
+        let base = if is_uppercase { b'A' } else { b'a' };
+        let alphabetic_order = char.to_ascii_lowercase() as u8 - b'a';
+
+        let shift = key
+            .chars()
+            .nth((i - added_non_alphebetical) % key.len())
+            .unwrap()
+            .to_ascii_lowercase() as u8
+            - b'a';
+        let shifted = (alphabetic_order as i8 - shift as i8).rem_euclid(ALPHABET_LENGTH as i8);
+
+        let new_char = (shifted + base as i8) as u8 as char;
+        result.push(new_char);
+    }
+
+    println!("{}", result)
+}
+```
+
+и получаем ожидаемый результат с дельным советом и "солью" :)
+
+<Spoiler>picoCTF\{D0NT_US3_V1G3N3R3_C1PH3R_2951a89h\}</Spoiler>

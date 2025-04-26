@@ -34,27 +34,32 @@ export default async function Page({
 
     const markdownUrl =
         `https://github.com/securesvet/mursvet-next/edit/main/src/docs/${slug}/index.mdx`;
-    
+
     return (
         <LayoutHeader>
-            <div className="max-w-screen md:px-40 lg:px-70">
-                <p className="text-sm text-gray-400">
-                    {frontmatter.created}
-                </p>
-                <MDXLayout>
-                    <Markdown />
-                </MDXLayout>
-                <div className="text-primary mt-5">
-                    <div className="flex justify-end text-secondary flex-wrap">
-                        <p className="text-sm">
-                            Last edited on {frontmatter.updated}
-                        </p>
+            <div className="flex justify-center items-center">
+                <div className="max-w-[700px] w-full">
+                    <p className="text-sm text-gray-400">
+                        {frontmatter.created}
+                    </p>
+                    <MDXLayout>
+                        <Markdown />
+                    </MDXLayout>
+                    <div className="text-primary mt-5">
+                        <div className="flex justify-end text-secondary flex-wrap">
+                            {frontmatter.updated &&
+                                (
+                                    <p className="text-sm">
+                                        Last edited on {frontmatter.updated}
+                                    </p>
+                                )}
+                            <Edit markdownUrl={markdownUrl} />
+                        </div>
                     </div>
-                    <Edit markdownUrl={markdownUrl} />
-                </div>
                     <div className="text-secondary text-sm flex justify-end">
                         by {frontmatter.author}
                     </div>
+                </div>
             </div>
         </LayoutHeader>
     );
@@ -62,12 +67,14 @@ export default async function Page({
 
 const Edit = ({ markdownUrl }: { markdownUrl: string }) => {
     return (
-        <a
-            className="hover:underline text-sm flex justify-end items-center gap-1"
-            href={markdownUrl}
-        >
-            <FaEdit />
-            Edit
-        </a>
+        <div className="w-fit">
+            <a
+                className="hover:underline text-sm flex justify-end items-center gap-1"
+                href={markdownUrl}
+            >
+                <FaEdit />
+                Edit
+            </a>
+        </div>
     );
 };
