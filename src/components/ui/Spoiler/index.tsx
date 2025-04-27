@@ -1,18 +1,24 @@
-'use client';
+"use client";
 
-import './index.css';
+import { cn } from "@/lib/utils";
+import "./index.css";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-export function Spoiler({ children }: { children: React.ReactNode }) {
+export default function Spoiler({ children }: { children: React.ReactNode }) {
   const [revealed, setRevealed] = useState(false);
 
   return (
-    <span
-      onClick={() => setRevealed(true)}
-      className="spoiler"
-    >
-      {children}
-    </span>
+    <div onClick={() => setRevealed(true)}>
+      <span
+        className={cn(
+          "transition-all ",
+          !revealed && "spoiler text-transparent",
+          revealed && "text-opacity-100",
+        )}
+      >
+        {children}
+      </span>
+    </div>
   );
 }

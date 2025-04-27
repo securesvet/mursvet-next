@@ -1,4 +1,4 @@
-import { Spoiler } from "@/components/ui/Spoiler";
+import Spoiler from "@/components/ui/Spoiler";
 import MagneticText from "@/components/ui/MagneticText";
 import type { MDXComponents } from "mdx/types";
 
