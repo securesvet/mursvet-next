@@ -1,21 +1,26 @@
 ---
-created: "18-04-2025"
-title: "Pico CTF: hashcrack"
-updated: "18-04-2025"
+created: '18-04-2025'
+title: 'Pico CTF: hashcrack'
+updated: '18-04-2025'
 author: Sviatoslav Murzin
 ---
 
 # PicoCTF 'hashcrack'
 
-Задание сложности `easy` на сайте [picoctf.org](https://play.picoctf.org/practice/challenge/475?category=2&difficulty=1&page=1) учит тому, что такое хэши и как их использовать, давайте взглянем на это задание поглубже
+Задание сложности `easy` на сайте
+[picoctf.org](https://play.picoctf.org/practice/challenge/475?category=2&difficulty=1&page=1)
+учит тому, что такое хэши и как их использовать, давайте взглянем на это задание
+поглубже
 
 ![task](/markdown/images/task.png 'Задание')
 
->A company stored a secret message on a server which got breached due to the admin using weakly hashed passwords. Can you gain access to the secret stored within the server?
+> A company stored a secret message on a server which got breached due to the
+> admin using weakly hashed passwords. Can you gain access to the secret stored
+> within the server?
 >
->Access the server using `nc verbal-sleep.picoctf.net 57192`
+> Access the server using `nc verbal-sleep.picoctf.net 57192`
 
-Задание более чем понятно, начнем 
+Задание более чем понятно, начнем
 
 Вводим в терминал:
 
@@ -35,13 +40,14 @@ nc verbal-sleep.picoctf.net 57192
 
 Совсем коротко про хэши и их длины:
 
-| Algorithm | Length (Hex) | Example |
-| - | - | - |
-|MD5 | 32 chars | 5f4dcc3b5aa765d61d8327deb882cf99|
-SHA-1 | 40 chars | b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3
-SHA-256 | 64 chars | cd0894152aa5eec36ec79eb2bcb90ca40f056804530f40732b4957a496b23dc8
+| Algorithm | Length (Hex) | Example                                                          |
+| --------- | ------------ | ---------------------------------------------------------------- |
+| MD5       | 32 chars     | 5f4dcc3b5aa765d61d8327deb882cf99                                 |
+| SHA-1     | 40 chars     | b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3                         |
+| SHA-256   | 64 chars     | cd0894152aa5eec36ec79eb2bcb90ca40f056804530f40732b4957a496b23dc8 |
 
-Глядя на наш хэш: 482c811da5d5b4bc6d497ffa98491e38, если посчитать с помощью Питона
+Глядя на наш хэш: 482c811da5d5b4bc6d497ffa98491e38, если посчитать с помощью
+Питона
 
 ```python
 >>> len("482c811da5d5b4bc6d497ffa98491e38")
@@ -54,14 +60,18 @@ SHA-256 | 64 chars | cd0894152aa5eec36ec79eb2bcb90ca40f056804530f40732b4957a496b
 
 Посмотрим еще разочек на условие и увидим фразу
 
->admin using weakly hashed passwords
+> admin using weakly hashed passwords
 
-Есть такое мнение, что с помощью легендарного листа `rockyou.txt` можно узнать, какой же пароль всё-таки использовался, остальное дело техники и питонячего кода
+Есть такое мнение, что с помощью легендарного листа `rockyou.txt` можно узнать,
+какой же пароль всё-таки использовался, остальное дело техники и питонячего кода
 
-Нам нужно пройтись по всему файлу с самыми популярными паролями, перевести их в Хэш и проверить, совпадает ли этот Хэш с нашим Хэшем
+Нам нужно пройтись по всему файлу с самыми популярными паролями, перевести их в
+Хэш и проверить, совпадает ли этот Хэш с нашим Хэшем
 
 ![hash](/markdown/images/hesh.png)
-> Однако, есть одна постоянная в музыкальном бизнесе... Хит это хит. А это, друг мой, далеко не хит © Хэш Рабкин, "Сопрано"
+
+> Однако, есть одна постоянная в музыкальном бизнесе... Хит это хит. А это, друг
+> мой, далеко не хит © Хэш Рабкин, "Сопрано"
 
 Из всего выше сказанного делаем скрипт
 
@@ -81,7 +91,9 @@ with open('/home/svetsec/ctf/rockyou.txt', 'r', encoding='utf-8', errors='ignore
 
 ```
 
-К сожалению, пришлось поиграться с кодировками, потому что питон постоянно выкидывал ошибку насчет каких-то символов, но я сказал ему игнорировать это `errors=false`
+К сожалению, пришлось поиграться с кодировками, потому что питон постоянно
+выкидывал ошибку насчет каких-то символов, но я сказал ему игнорировать это
+`errors=false`
 
 ```
 WE GOT A HIT
@@ -90,11 +102,12 @@ password123
 
 Вводим пароль и...
 
->Correct! You've cracked the MD5 hash with no secret found!
->Flag is yet to be revealed!! Crack this hash: b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3
+> Correct! You've cracked the MD5 hash with no secret found! Flag is yet to be
+> revealed!! Crack this hash: b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3
 
-Ну ладно, смотрим внимательно на хэш и понимаем, что в нём 40 символов, а это значит... Это значит, что можно его поломать таким же образом, только заменить md5 на sha1
-
+Ну ладно, смотрим внимательно на хэш и понимаем, что в нём 40 символов, а это
+значит... Это значит, что можно его поломать таким же образом, только заменить
+md5 на sha1
 
 ```python
 import hashlib
@@ -121,13 +134,14 @@ letmein
 
 И НАКОНЕЦ
 
-> Correct! You've cracked the SHA-1 hash with no secret found!
-> Almost there!! Crack this hash: 916e8c4f79b25028c9e467f1eb8eee6d6bbdff965f9928310ad30a8d88697745
+> Correct! You've cracked the SHA-1 hash with no secret found! Almost there!!
+> Crack this hash:
+> 916e8c4f79b25028c9e467f1eb8eee6d6bbdff965f9928310ad30a8d88697745
 
-Да ты че... Я щас все закончу, только не говорите что нужно писать скрипт который будет парсить эти хэши
+Да ты че... Я щас все закончу, только не говорите что нужно писать скрипт
+который будет парсить эти хэши
 
 Ладно, вроде похоже на SHA256, попробуем все то же самое
-
 
 ```python
 import hashlib
@@ -154,17 +168,18 @@ qwerty098
 
 Вводим...
 
-> Correct! You've cracked the SHA-256 hash with a secret found. 
-> The flag is: picoCTF\{...\}
+> Correct! You've cracked the SHA-256 hash with a secret found. The flag is:
+> picoCTF\{...\}
 
 Да ну) Ну наконец-то)
 
-В общем говоря, нашли три хэша, прошлись по списочку, раскодировали и все хорошо и все молодцы.
+В общем говоря, нашли три хэша, прошлись по списочку, раскодировали и все хорошо
+и все молодцы.
 
 Теперь все читатели знают про такую табличку и такой интересный факт!
 
-| Algorithm | Length (Hex) | Example |
-| - | - | - |
-|MD5 | 32 chars | 5f4dcc3b5aa765d61d8327deb882cf99|
-SHA-1 | 40 chars | b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3
-SHA-256 | 64 chars | cd0894152aa5eec36ec79eb2bcb90ca40f056804530f40732b4957a496b23dc8
+| Algorithm | Length (Hex) | Example                                                          |
+| --------- | ------------ | ---------------------------------------------------------------- |
+| MD5       | 32 chars     | 5f4dcc3b5aa765d61d8327deb882cf99                                 |
+| SHA-1     | 40 chars     | b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3                         |
+| SHA-256   | 64 chars     | cd0894152aa5eec36ec79eb2bcb90ca40f056804530f40732b4957a496b23dc8 |
