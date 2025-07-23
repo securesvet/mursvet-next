@@ -90,7 +90,7 @@ export default function WriteupsList({
           {["all", "easy", "medium", "hard"].map((level) => (
             <button
               key={level}
-              onClick={() => setSelectedDifficulty(level as any)}
+              onClick={() => setSelectedDifficulty(level as unknown as any)}
               className="hover:cursor-pointer"
             >
               <Badges

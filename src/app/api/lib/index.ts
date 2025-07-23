@@ -21,7 +21,8 @@ export async function getGithubMarkdownFoldersWithFiles(
   owner: string,
   repo: string,
 ): Promise<FolderWithMarkdown[]> {
-  const url = `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
+  const url =
+    `https://api.github.com/repos/${owner}/${repo}/git/trees/main?recursive=1`;
   const res = await fetch(url, { headers: HEADERS });
 
   if (!res.ok) {
@@ -82,7 +83,8 @@ export async function getGithubFileMetaInfo(
   repo: string,
   path: string,
 ): Promise<{ created: string; updated: string; author: string }> {
-  const url = `https://api.github.com/repos/${owner}/${repo}/commits?path=${path}`;
+  const url =
+    `https://api.github.com/repos/${owner}/${repo}/commits?path=${path}`;
 
   const res = await fetch(url, { headers: HEADERS });
   if (!res.ok) {

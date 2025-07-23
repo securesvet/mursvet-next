@@ -104,19 +104,19 @@ const ProjectCard = ({
 }: { githubUrl?: string; stack?: ReactNode[] } & CardProps) => {
   return (
     <Card {...props}>
-      {githubUrl ? (
-        <a
-          href={githubUrl}
-          target="_blank"
-          className="mt-2 inline-block hover:underline items-center"
-        >
-          <div className="flex items-center gap-2 justify-center">
-            <FaGithub className="inline" /> Github
-          </div>
-        </a>
-      ) : (
-        <p>Closed source</p>
-      )}
+      {githubUrl
+        ? (
+          <a
+            href={githubUrl}
+            target="_blank"
+            className="mt-2 inline-block hover:underline items-center"
+          >
+            <div className="flex items-center gap-2 justify-center">
+              <FaGithub className="inline" /> Github
+            </div>
+          </a>
+        )
+        : <p>Closed source</p>}
       <div className="flex justify-center mt-2 items-center gap-2">{stack}</div>
     </Card>
   );

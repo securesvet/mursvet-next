@@ -32,7 +32,8 @@ export default async function Page({
     `@/docs/${slug}/${mdFile}`
   );
 
-  const markdownUrl = `https://github.com/securesvet/mursvet-next/edit/main/src/docs/${slug}/index.mdx`;
+  const markdownUrl =
+    `https://github.com/securesvet/mursvet-next/edit/main/src/docs/${slug}/index.mdx`;
 
   return (
     <LayoutHeader>

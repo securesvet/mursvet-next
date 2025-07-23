@@ -9,8 +9,7 @@ const Footer = () => {
         <div></div>
         <div className="grid h-full place-items-center text-sm font-medium">
           <p>
-            © {new Date().getFullYear()} Sviatoslav Murzin. All rights
-            reserved.
+            © {new Date().getFullYear()} Sviatoslav Murzin. All rights reserved.
           </p>
         </div>
       </footer>

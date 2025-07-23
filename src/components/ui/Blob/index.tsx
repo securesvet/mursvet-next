@@ -28,7 +28,8 @@ const Blob = ({ imageUrl, values, imgProps, ...props }: BlobType) => {
         preserveAspectRatio="none"
         style={{ objectFit: "cover", width: "100%", height: "100%" }}
         {...imgProps}
-      ></image>
+      >
+      </image>
       <clipPath id="shape">
         <path id="blob" fill="url(#gradient)" transform="translate(100 100)">
           <animate
@@ -36,7 +37,8 @@ const Blob = ({ imageUrl, values, imgProps, ...props }: BlobType) => {
             dur="10000ms"
             repeatCount="indefinite"
             values={values || defaultValues}
-          ></animate>
+          >
+          </animate>
         </path>
       </clipPath>
     </svg>
