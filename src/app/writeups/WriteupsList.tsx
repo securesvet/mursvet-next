@@ -102,15 +102,14 @@ export default function WriteupsList({
         </div>
       </div>
 
-      {/* Список */}
       <nav className="flex flex-col gap-4">
         {filteredWriteups.map((writeup, index) => (
           <Link
             key={`${index}-${writeup.name}`}
             href={`/writeups/${writeup.name}`}
-            className="block rounded-lg border border-gray-200 p-4 hover:bg-gray-900 transition"
+            className="block rounded-lg border p-4 transition"
           >
-            <p className="text-sm text-gray-400">
+            <p className="text-sm">
               {writeup.frontmatter?.created}
             </p>
             <h3 className="text-xl font-semibold py-2">

@@ -16,9 +16,9 @@ const Card = ({ href, image, name, description, children }: CardProps) => {
           className="w-full h-64 object-cover rounded-2xl transition-opacity hover:opacity-80"
         />
       </a>
-      <div className="p-5 text-white text-center">
+      <div className="p-5 text-center">
         <h3 className="text-xl font-semibold mb-2">{name}</h3>
-        <p className="text-sm text-gray-300">{description}</p>
+        <p className="text-sm light:text-gray-300">{description}</p>
         {children}
       </div>
     </div>

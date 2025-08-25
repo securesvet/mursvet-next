@@ -74,8 +74,8 @@ const Projects = () => {
   return (
     <LayoutHeader>
       <div className="text-center mb-12">
-        <h2 className="text-white drop-shadow-lg text-2xl mb-2">Projects</h2>
-        <p className="text-gray-300 mt-2 text-lg">
+        <h2 className="drop-shadow-lg text-2xl mb-2">Projects</h2>
+        <p className="mt-2 text-lg">
           {data.length} Project{data.length > 1 && "s"}
         </p>
       </div>

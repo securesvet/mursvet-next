@@ -25,9 +25,8 @@ const MountTransition = ({
 
   return (
     <div
-      className={`transition-all duration-1000 ease-out transform ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      } ${className}`}
+      className={`transition-all duration-1000 ease-out transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        } ${className}`}
     >
       {children}
     </div>

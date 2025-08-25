@@ -23,7 +23,7 @@ const MagneticText = ({
   className = "",
 }: MagneticTextType) => {
   const maxWeight = 900;
-  const minWeight = 100;
+  const minWeight = 400;
   const containerRef = useRef<HTMLDivElement>(null);
   const [weights, setWeights] = useState<number[]>(
     new Array(text.length).fill(startBold ? maxWeight : minWeight),
@@ -81,7 +81,7 @@ const MagneticText = ({
             key={i}
             style={{
               fontVariationSettings: `"wght" ${weights[i] || 400}`,
-              transition: "font-variation-settings 0.3s ease",
+              transition: "font-variation-settings 0.1s ease",
             }}
           >
             {char}
