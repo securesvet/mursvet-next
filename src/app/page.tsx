@@ -1,22 +1,27 @@
 import MagneticText from "@/components/ui/MagneticText";
-import Blob from "@/components/ui/Blob";
 import MountTransition from "@/components/transitions";
+import { Library } from '../components/Library/';
 import { LayoutHeader } from "@/components/Header";
+import Image from 'next/image';
 
 const Home = () => {
   return (
     <LayoutHeader>
-      <section id="greet">
-        <div className="flex justify-center items-center">
+      <section id="greet" className="h-[600px] flex justify-center items-center">
+        <div className="flex justify-center items-center gap-8">
           <MountTransition>
             <Greeting />
           </MountTransition>
           <div
-            className={`w-xs aspect-square hover:opacity-80 transition-opacity duration-300`}
+            className={`aspect-square hover:opacity-80 transition-opacity duration-300`}
           >
             <Avatar />
           </div>
         </div>
+      </section>
+      <section id="library">
+        <h1 className="text-3xl">Library:</h1>
+        <Library />
       </section>
     </LayoutHeader>
   );
@@ -26,7 +31,7 @@ const Avatar = () => {
   const githubUrl = "https://github.com/securesvet";
   return (
     <a href={githubUrl} target="_blank">
-      <Blob imageUrl={"/me.webp"} />
+      <Image src={"/photo_me_elevator_square.webp"} alt="Sviatoslav Murzin Image" width={200} height={200} />
     </a>
   );
 };

@@ -19,15 +19,9 @@ const nextConfig: NextConfig = {
 const withMDX = nextMDX({
   extension: /\.(md|mdx)$/,
   options: {
-    remarkPlugins: [
-      remarkGfm,
-      remarkFrontmatter,
-      remarkMdxFrontmatter,
-    ],
+    remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter],
     rehypePlugins: [rehypeHighlight],
   },
 });
 
-export default withMDX(
-  nextConfig,
-);
+export default withMDX(nextConfig);

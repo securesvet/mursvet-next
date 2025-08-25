@@ -7,7 +7,9 @@ const Resume = () => {
     <LayoutHeader>
       <h2 className="text-center text-2xl mb-2">Resume</h2>
       <div className="text-center mb-6">
-        <a href={"/resume.pdf"} className="hover:underline">Скачать PDF</a>
+        <a href={"/resume.pdf"} className="hover:underline">
+          Скачать PDF
+        </a>
       </div>
       <div className="flex justify-center">
         <article className="prose prose-invert">

@@ -23,36 +23,15 @@ const DenoColorIcon = () => {
 };
 
 const ViteSvgColorIcon = () => {
-  return (
-    <Image
-      alt="vite"
-      width={20}
-      height={20}
-      src={ViteSvg}
-    />
-  );
+  return <Image alt="vite" width={20} height={20} src={ViteSvg} />;
 };
 
 const ReduxSvgColorIcon = () => {
-return (
-  <Image
-    alt="redux"
-    width={20}
-    height={20}
-    src={ReduxSvg}
-  />
-)
+  return <Image alt="redux" width={20} height={20} src={ReduxSvg} />;
 };
 
 const BableSvgColorIcon = () => {
-return (
-  <Image
-    alt="babel"
-    width={20}
-    height={20}
-    src={BabelSvg}
-  />
-)
+  return <Image alt="babel" width={20} height={20} src={BabelSvg} />;
 };
 
 const Projects = () => {
@@ -95,10 +74,8 @@ const Projects = () => {
   return (
     <LayoutHeader>
       <div className="text-center mb-12">
-        <h2 className="text-white drop-shadow-lg text-2xl mb-2">
-          Projects
-        </h2>
-        <p className="text-gray-300 mt-2 text-lg">
+        <h2 className="drop-shadow-lg text-2xl mb-2">Projects</h2>
+        <p className="mt-2 text-lg">
           {data.length} Project{data.length > 1 && "s"}
         </p>
       </div>
