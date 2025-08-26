@@ -3,9 +3,31 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import MagneticText from "../ui/MagneticText";
+import { useLoading } from "@/context";
+
+const headerElements = [
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "Writeups",
+    path: "/writeups",
+  },
+  {
+    name: "Projects",
+    path: "/projects",
+  },
+  {
+    name: "Resume",
+    path: "/resume",
+  },
+];
+
 
 const Header = () => {
   const headerRef = useRef<HTMLDivElement>(null);
+  const { isLoading } = useLoading();
   const [prevScrollY, setPrevScrollY] = useState(0);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
@@ -25,33 +47,16 @@ const Header = () => {
     return () => removeEventListener("scroll", handleScroll);
   }, [prevScrollY]);
 
-  const headerElements = [
-    {
-      name: "Home",
-      path: "/",
-    },
-    {
-      name: "Writeups",
-      path: "/writeups",
-    },
-    {
-      name: "Projects",
-      path: "/projects",
-    },
-    {
-      name: "Resume",
-      path: "/resume",
-    },
-  ];
-
   return (
     <div
-      className={`fixed flex items-center justify-center top-4 left-1/2 transform -translate-x-1/2 transition-all duration-500 ease-out  w-full z-50`}
+      className={`fixed flex items-center justify-center top-4 left-1/2 transform -translate-x-1/2 transition-all duration-500 ease-out  w-full z-50
+`}
       ref={headerRef}
     >
       <header
         className={`block h-16 w-[372px] transition-all duration-500 ease-out rounded-2xl backdrop-blur-md shadow-[0px_5px_15px_rgba(255,255,255,0.05)] border-[1px] border-[rgba(0,0,0,0.3)]
         ${isHeaderVisible ? "opacity-100 " : "-translate-y-full opacity-0"}
+        ${isLoading ? "border-blue-500 shadow-lg shadow-blue-500/50 animate-pulse" : "border-[rgba(0,0,0,0.3)]"}
         `}
       >
         <div className="flex w-full h-full items-center justify-center">

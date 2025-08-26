@@ -23,8 +23,8 @@ const books: Book[] = [
 export const Library = () => {
   return (
     <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-6">
-      {books.map((book) => (
-        <>
+      {books.map((book, index) => (
+        <div key={index}>
           <img
             src={book.cover}
             alt={book.title}
@@ -51,7 +51,7 @@ export const Library = () => {
               </span>
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );
