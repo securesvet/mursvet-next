@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { LoadingProvider } from "@/context";
 
 export const metadata: Metadata = {
   title: "Mursvet",
@@ -22,12 +23,14 @@ export default function RootLayout({
         />
       </head>
       <body className={`antialiased`}>
-        <Header />
-        <main className="min-h-[var(--screen-no-header-no-footer)] p-[var(--main-content-padding)]">
-          {children}
-        </main>
-        <Footer />
+        <LoadingProvider>
+          <Header />
+          <main className="min-h-[var(--screen-no-header-no-footer)] p-[var(--main-content-padding)]">
+            {children}
+          </main>
+          <Footer />
+        </LoadingProvider>
       </body>
-    </html>
+    </html >
   );
 }
