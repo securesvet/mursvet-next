@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import SLink from "@/components/SLink";
 import { useMemo, useState } from "react";
 
 export type FrontmatterType = {
@@ -104,7 +104,7 @@ export default function WriteupsList({
 
       <nav className="flex flex-col gap-4">
         {filteredWriteups.map((writeup, index) => (
-          <Link
+          <SLink
             key={`${index}-${writeup.name}`}
             href={`/writeups/${writeup.name}`}
             className="block rounded-lg border p-4 transition"
@@ -123,7 +123,7 @@ export default function WriteupsList({
             <p className="text-sm text-gray-400">
               {writeup.frontmatter?.description}
             </p>
-          </Link>
+          </SLink>
         ))}
       </nav>
     </div>

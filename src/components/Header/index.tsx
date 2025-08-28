@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import SLink from "@/components/SLink";
 import MagneticText from "../ui/MagneticText";
 import { useLoading } from "@/context";
 
@@ -62,13 +62,13 @@ const Header = () => {
         <div className="flex w-full h-full items-center justify-center">
           <ul className="flex gap-8 justify-around items-center px-2 text-md font-medium">
             {headerElements.map((item) => (
-              <li key={item.name} className="">
-                <Link
+              <li key={item.name}>
+                <SLink
                   href={item.path}
                   className="hover:font-extrabold transition-all duration-150"
                 >
-                  <MagneticText text={item.name} minWeight={400} />
-                </Link>
+                  <MagneticText text={item.name} minWeight={400} className={isLoading ? "opacity-50" : ""} />
+                </SLink>
                 <div></div>
               </li>
             ))}
