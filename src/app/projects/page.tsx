@@ -41,7 +41,7 @@ const Projects = () => {
       image: mursvet,
       description: "This website hosted on Github Pages",
       href: "https://mursvet.ru",
-      githubUrl: "https://github.com/securesvet/writeups",
+      githubUrl: "https://github.com/securesvet/mursvet-next",
       stack: [
         <ReactColorIcon key="react" />,
         <NodeJsColorIcon key="nodejs" />,
