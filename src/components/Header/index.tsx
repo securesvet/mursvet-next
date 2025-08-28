@@ -3,6 +3,7 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import SLink from "@/components/SLink";
 import MagneticText from "../ui/MagneticText";
+import getBrightness from "@/lib/getBrightness";
 import { useLoading } from "@/context";
 
 const headerElements = [
