@@ -1,5 +1,4 @@
 import { LayoutHeader } from "@/components/Header";
-import ResumeMarkdown from "@/docs/resume.mdx";
 import { MDXLayout } from "@/components/markdown";
 
 const Resume = () => {
@@ -10,13 +9,6 @@ const Resume = () => {
         <a href={"/resume.pdf"} className="hover:underline">
           Скачать PDF
         </a>
-      </div>
-      <div className="flex justify-center">
-        <article className="prose prose-invert">
-          <MDXLayout>
-            <ResumeMarkdown />
-          </MDXLayout>
-        </article>
       </div>
     </LayoutHeader>
   );
