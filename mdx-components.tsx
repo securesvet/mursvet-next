@@ -1,6 +1,7 @@
 import Spoiler from "@/components/ui/Spoiler";
 import MagneticText from "@/components/ui/MagneticText";
 import Image, { type ImageProps } from "next/image";
+import { FifteenPuzzle } from "@/components/FifteenPuzzle";
 import type { MDXComponents } from "mdx/types";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -15,6 +16,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       />
     ),
     Spoiler,
+    FifteenPuzzle,
     MagneticText: (props: any) => <MagneticText {...props} />,
     ...components,
   };

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   DndContext,
@@ -5,14 +7,9 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
+  useDraggable,
+  useDroppable,
 } from "@dnd-kit/core";
-import { useDraggable } from "@dnd-kit/core";
-
-// FifteenPuzzle component (default export)
-// - Uses dnd-kit for drag-and-drop
-
-// - Shuffle implemented by performing many legal random moves (guaranteed solvable)
-// - Tailwind CSS used for styling
 
 type Tile = number; // 0 represents the empty slot
 
@@ -46,7 +43,6 @@ function shuffleBoard(moves = 200): Tile[] {
     for (let j = 0; j < TILE_COUNT; j++)
       if (areAdjacent(j, emptyIdx)) neighbors.push(j);
     const choice = neighbors[Math.floor(Math.random() * neighbors.length)];
-    // swap
     [board[emptyIdx], board[choice]] = [board[choice], board[emptyIdx]];
     emptyIdx = choice;
   }
@@ -69,44 +65,35 @@ export const FifteenPuzzle: React.FC = () => {
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
   );
 
-  // Derived
-  const emptyIndex = board.indexOf(0);
   const isSolved = useMemo(
     () => board.every((v, i) => (i + 1 === TILE_COUNT ? v === 0 : v === i + 1)),
     [board],
   );
 
-  useEffect(() => {
-    if (isSolved && startedAt !== null) {
-      // solved
-    }
-  }, [isSolved, startedAt]);
-
   const startNewGame = useCallback(() => {
     setIsShuffling(true);
     setStartedAt(Date.now());
     setMoves(0);
-    // Shuffle with deterministic-ish randomness
     setTimeout(() => {
       setBoard(shuffleBoard(250));
       setIsShuffling(false);
     }, 0);
   }, []);
 
-  // Perform swap only if over is the empty tile and adjacent
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event;
       if (!over) return;
+
       const activeId = Number(active.id);
       const overId = Number(over.id);
-      // Only allow drop onto the empty slot (id 0) AND adjacency
+
       if (overId === 0) {
-        // find indices
         const fromIdx = board.findIndex((v) => v === activeId);
         const toIdx = board.findIndex((v) => v === 0);
         if (fromIdx === -1 || toIdx === -1) return;
         if (!areAdjacent(fromIdx, toIdx)) return;
+
         const newBoard = [...board];
         [newBoard[fromIdx], newBoard[toIdx]] = [
           newBoard[toIdx],
@@ -135,6 +122,7 @@ export const FifteenPuzzle: React.FC = () => {
         ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
         : undefined,
       transition: isDragging ? "none" : undefined,
+      zIndex: isDragging ? 10 : 1,
     };
 
     return (
@@ -159,29 +147,25 @@ export const FifteenPuzzle: React.FC = () => {
     idx,
     children,
   }) => {
-    // We'll make each cell a droppable area by giving it a data-over id we can read in onDragEnd
-    // Since we rely on onDragEnd.over.id provided by dnd-kit, we need to create a dedicated element
-    // with the droppable id set. dnd-kit picks up droppables via `data-droppable-id`/attributes set by
-    // useDroppable; however, we don't want to import useDroppable directly. Instead, we emulate droppable
-    // by rendering an element with `data-droppable-id` attribute — dnd-kit core detects elements by id when
-    // registering sensors on draggable and droppable.
-
-    // The simplest approach is assigning id to the cell container: the dnd-kit PointerSensor will set `over` to DOM element id
-    // Only caveat: we set the id to the tile value (0 or tile number) rather than cell index so that over.id matches values.
+    const value = board[idx];
+    const { setNodeRef, isOver } = useDroppable({
+      id: String(value), // "0" for empty cell
+    });
 
     return (
       <div
-        id={String(board[idx])}
-        className={`w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-2xl select-none transform transition-all duration-150 border border-transparent ${
-          board[idx] === 0 ? "bg-gray-100" : ""
-        }`}
+        ref={setNodeRef}
+        className={`w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-2xl
+          select-none transform transition-all duration-150 border
+          ${value === 0 ? "bg-gray-100 border-dashed border-gray-300" : "border-transparent"}
+          ${isOver ? "ring-2 ring-blue-400" : ""}
+        `}
       >
         {children}
       </div>
     );
   };
 
-  // Render grid cells; each cell either contains a tile (draggable) or empty cell (droppable by id)
   const cells = (
     <div
       className="grid grid-cols-4 gap-3 touch-none"
