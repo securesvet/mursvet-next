@@ -1,12 +1,6 @@
 name: Generate PDF with Typst
 
-on:
-  pull_request:
-    paths:
-      - "src/docs/resume.typ"
-  push:
-    paths:
-      - "src/docs/resume.typ"
+on: [push]
 
 jobs:
   build:
