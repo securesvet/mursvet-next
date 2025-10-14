@@ -19,7 +19,7 @@ jobs:
         run: |
           curl -L https://github.com/typst/typst/releases/latest/download/typst-x86_64-unknown-linux-musl.tar.xz -o typst.tar.xz
           tar -xf typst.tar.xz
-          sudo mv typst /usr/local/bin/typst
+          sudo mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/typst
           typst --version
 
       - name: Compile Typst to PDF
