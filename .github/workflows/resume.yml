@@ -1,22 +1,46 @@
 name: Generate PDF with Typst
 
 on:
+  pull_request:
+    paths:
+      - "src/docs/resume.typ"
   push:
-    branches:
-      - main
+    paths:
+      - "src/docs/resume.typ"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # allows committing back to PR
+      pull-requests: write # allows commenting, etc.
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # ensures we’re on the PR branch
+
       - name: Compile Typst to PDF
         uses: typst/compile-typst-action@v1
         with:
-          source_path: "src/docs/resume.typ" # Your main Typst file
-          output_path: "public/resume.pdf" # Desired output PDF filename
-      - name: Upload PDF artifact
+          source_path: "src/docs/resume.typ"
+          output_path: "public/resume.pdf"
+
+      - name: Commit generated PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/resume.pdf
+          # Only commit if there’s a change
+          git diff --cached --quiet public/resume.pdf || git commit -m "chore: update generated resume.pdf"
+
+      - name: Push changes back to PR branch
+        run: |
+          git push origin HEAD:${{ github.head_ref }}
+
+      - name: Upload PDF as artifact (optional)
         uses: actions/upload-artifact@v4
         with:
-          name: typst-pdf
-          path: resume.pdf
+          name: resume-pdf
+          path: public/resume.pdf
