@@ -43,11 +43,15 @@ Personal and open-source projects available at:
 - #link("https://github.com/securesvet/mursvet-next")[Heroed]
 - #link("https://github.com/securesvet/mursvet-next")[Mursvet Next]
 
+=== Competitions
+
+- NSUCRYPTO 2025
+
 == Professional Experience
 
 === Yandex — Developer
 *September 2025 – Present*
-- Member of the Yandex.Contest development team.
+- Member of the #link("https://www.contest.yandex.com")[Yandex.Contest] development team.
 
 === Yandex School — Developer
 *June 2025 – August 2025*
