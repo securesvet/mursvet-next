@@ -40,8 +40,8 @@ Personal and open-source projects available at:
 - #link("https://www.github.com/securesvet")[github.com/securesvet]
 
 *Selected projects:*
-- #link("https://github.com/securesvet/mursvet-next")[Heroed]
 - #link("https://github.com/securesvet/mursvet-next")[Mursvet Next]
+- #link("https://github.com/securesvet/dnd-bot")[DndBot]
 
 === Competitions
 
